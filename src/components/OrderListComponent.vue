@@ -42,7 +42,6 @@ export default {
         return {
             orderList: [],
             visibleOrder: new Set(),
-            isAdmin: true,
         }
     },
 
