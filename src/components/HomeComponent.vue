@@ -1,5 +1,9 @@
 <template>
-    <h1>홈 화면</h1>
+    <div class="container">
+        <div class="page-header text-center" style="margin-top: 20px">
+          <h1>홈 화면</h1>
+        </div>
+    </div>
 </template>
 
 <script>
