@@ -49,7 +49,7 @@ export default {
         try {
             const token = localStorage.getItem('token');
             const headers = token ? { Authorization: `Bearer ${token}` } : {};
-            const response = await axios.get(this.apiUrl, { headers });
+            const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}${this.apiUrl}`, { headers });
             this.orderList = response.data;
         } catch (error) {
             console.log(error)
@@ -68,7 +68,7 @@ export default {
                 try {
                     const token = localStorage.getItem('token');
                     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-                    await axios.delete(`http://localhost:8080/order/${orderId}/cancel`, { headers });
+                    await axios.delete(`${process.env.VUE_APP_API_BASE_URL}/order/${orderId}/cancel`, { headers });
 
                     //데이터베이스가 업데이트가 되면 그와 동시에 바로 프론트 화면이 변경되어야한다.
                     const order = this.orderList.find(order => order.id === orderId);
