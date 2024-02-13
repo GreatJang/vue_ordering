@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from '@/router/index.js'
+import Store from './store/cart.js'
 import '@/assets/css/bootstrap.min.css' // bootstrap import
 import axios from 'axios';
 
@@ -19,4 +20,5 @@ axios.interceptors.response.use(response => response, error =>{
 
 // vue애플리케이션에서 전역적으로 기능 사용할 경우에 아래와 같이 use문법 사용
 app.use(router);
+app.use(Store);
 app.mount('#app');

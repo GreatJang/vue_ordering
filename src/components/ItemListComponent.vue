@@ -72,6 +72,15 @@ export default {
         window.addEventListener('scroll', this.scrollPagination);
     },
     methods: { //사용자 정의 함수
+        addCart(){
+            const orderItems = Object.keys(this.selectedItems) //객체 안에 키값 추출하는 메서드
+                                .filter(key=>this.selectedItems[key]===true) // 키를 넣고 조회하는데 있는 애들중(선택된 애들 중) true이면
+                                .map(key => {
+                                    const item = this.itemList.find(item => item.id == key); // 전체 item객체를 리턴하는데
+                                    return {itemId:item.id, name:item.name ,count:item.quantity}; // 그 전체 item중 일치하는 값 return
+                                });
+            orderItems.forEach(item => this.$store.commit('addToCart', item));
+        },
         async deleteItem(itemId){
             if (confirm("정말 삭제 하시겠습니까?")) {
                 const token = localStorage.getItem('token');
