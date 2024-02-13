@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="page-header text-center" style="margin-top: 20px">
-            <h1>주문 목록</h1>
+            <h1>주문 관리</h1>
         </div>
         <table class="table">
             <thead>
