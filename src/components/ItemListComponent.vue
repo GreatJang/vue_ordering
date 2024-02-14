@@ -49,6 +49,7 @@
 
 <script>
 import axios from 'axios';
+import {mapActions} from 'vuex';
 export default {
     props: ['isAdmin', 'pageTitle'],
     data(){
@@ -72,6 +73,7 @@ export default {
         window.addEventListener('scroll', this.scrollPagination);
     },
     methods: { //사용자 정의 함수
+        ...mapActions(['addToCart']),
         addCart(){
             const orderItems = Object.keys(this.selectedItems) //객체 안에 키값 추출하는 메서드
                                 .filter(key=>this.selectedItems[key]===true) // 키를 넣고 조회하는데 있는 애들중(선택된 애들 중) true이면
@@ -79,7 +81,12 @@ export default {
                                     const item = this.itemList.find(item => item.id == key); // 전체 item객체를 리턴하는데
                                     return {itemId:item.id, name:item.name ,count:item.quantity}; // 그 전체 item중 일치하는 값 return
                                 });
+            console.log(orderItems)
+            // mutation직접호출 방식
+            // orderItems.forEach(item => this.$store.commit('addToCart', item));
+            // actions호출 방식
             orderItems.forEach(item => this.$store.commit('addToCart', item));
+            this.selectedItems = [];
         },
         async deleteItem(itemId){
             if (confirm("정말 삭제 하시겠습니까?")) {
@@ -103,7 +110,15 @@ export default {
                                 });
 
             const token = localStorage.getItem('token');
-            const headers = token ? {Authorization: `Bearer ${token}`} : {};
+            const headers = token ? { Authorization: `Bearer ${token}` } : {};
+            if(orderItems.length < 1){
+                alert("주문대상 물건이 없습니다.")
+                return;
+            }
+            if(!confirm(`${orderItems.length}개의 상품을 주문하시겠습니까?`)){
+                console.log("주문이 취소 되었습니다.");
+                return;
+            }
             try{
                 await axios.post(`${process.env.VUE_APP_API_BASE_URL}/order/create`, orderItems ,{headers})
                 console.log(orderItems);
@@ -113,11 +128,11 @@ export default {
                 console.log(error);
                 alert("주문이 실패되었습니다.");
             }
-        
         },
 
         searchItems(){
             this.itemList = [];
+            this.selectedItems = [];
             this.currentPage = 0;
             this.isLastPage = false;
             this.loadItems();
