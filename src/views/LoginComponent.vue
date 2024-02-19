@@ -34,7 +34,6 @@ export default {
     },
     methods:{
       async doLogin(){
-        // 2가지의 예외가능성
 
         // 1. 200번대 상태값 + 토큰x 
         // 2. 200번대 상태값x -> 분기처리
