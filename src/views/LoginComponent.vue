@@ -33,8 +33,8 @@ export default {
         }
     },
     methods:{
-      async doLogin(){
-
+      async doLogin(){                      
+        
         // 1. 200번대 상태값 + 토큰x 
         // 2. 200번대 상태값x -> 분기처리
       try{
